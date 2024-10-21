@@ -4,13 +4,36 @@ import './App.css'
 
 import { WagmiConfig } from 'wagmi'
 import Layout from "@/components/common/Layout"
-import { holesky } from "viem/chains"
 
 import ETHLogo from '@/assets/tokens/ether.svg'
+import { defineChain } from 'viem'
 
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
 
-const chains = [holesky]
+const superseed = defineChain({
+  id: 53302,
+  name: 'Superseed',
+  network: 'superseed-sepolia',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: [import.meta.env.VITE_INFURA_RPC],
+    },
+    public: {
+      http: [import.meta.env.VITE_INFURA_RPC],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'superseedExplorer',
+      url: 'https://sepolia-explorer.superseed.xyz/',
+    },
+  },
+  testnet: true,
+})
+
+
+const chains = [superseed]
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata: { name: 'Algebra Integral', description: 'DEX Engine', url: 'https://integral.algebra.finance', icons: [''] } })
 
 createWeb3Modal({ 
@@ -18,9 +41,9 @@ createWeb3Modal({
   projectId, 
   chains,
   chainImages: {
-    17000: ETHLogo
+    53302: ETHLogo
   },
-  defaultChain: holesky,
+  defaultChain: superseed,
   themeVariables: {
     '--w3m-accent': '#2797ff'
   }
