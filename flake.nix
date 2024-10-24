@@ -20,6 +20,9 @@
           buildInputs = [
             nodejs_22
             yarn
+            nodePackages.typescript-language-server
+            prettierd
+            eslint_d
           ];
         };
       }
